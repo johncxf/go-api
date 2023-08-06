@@ -14,15 +14,12 @@ import (
 
 // setupRouter 设置路由
 func setupRouter() *gin.Engine {
+	global.App.Logger.Info("setup router")
 	router := gin.Default()
 
 	// 注册 api 分组路由
 	apiGroup := router.Group("/api")
 	routes.SetApiGroupRoutes(apiGroup)
-
-	// 注册 api v1 分组路由
-	apiV1Group := router.Group("/api/v1")
-	routes.SetApiV1GroupRoutes(apiV1Group)
 
 	return router
 }
@@ -55,4 +52,5 @@ func RunServer() {
 		log.Fatal("Server Shutdown:", err)
 	}
 	log.Println("Server exiting")
+	global.App.Logger.Info("--- Service start ---")
 }

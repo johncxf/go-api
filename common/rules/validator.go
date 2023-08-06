@@ -1,4 +1,4 @@
-package common
+package rules
 
 import (
 	"github.com/go-playground/validator/v10"

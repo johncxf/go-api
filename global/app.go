@@ -1,7 +1,7 @@
 package global
 
 import (
-	"gin-practice/config"
+	"gin-practice/common/config"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 	"gorm.io/gorm"

@@ -1,17 +1,17 @@
-package v1
+package auth
 
 import (
-	request2 "gin-practice/app/requests"
-	"gin-practice/app/services"
+	"gin-practice/app/api/requests"
+	"gin-practice/app/api/services"
 	"gin-practice/common/response"
 	"github.com/gin-gonic/gin"
 )
 
 // Register 用户注册
 func Register(c *gin.Context) {
-	var form request2.Register
+	var form requests.Register
 	if err := c.ShouldBindJSON(&form); err != nil {
-		response.ValidateFail(c, request2.GetErrorMsg(form, err))
+		response.ValidateFail(c, requests.GetErrorMsg(form, err))
 		return
 	}
 

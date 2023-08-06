@@ -1,7 +1,7 @@
 package bootstrap
 
 import (
-	"gin-practice/common"
+	"gin-practice/common/utils"
 	"gin-practice/global"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -31,7 +31,7 @@ func InitLogger() *zap.Logger {
 }
 
 func createRootDir() {
-	if ok, _ := common.PathExists(global.App.Config.Logger.RootDir); !ok {
+	if ok, _ := utils.PathExists(global.App.Config.Logger.RootDir); !ok {
 		_ = os.Mkdir(global.App.Config.Logger.RootDir, os.ModePerm)
 	}
 }
@@ -69,7 +69,7 @@ func getZapCore() zapcore.Core {
 		encoder.AppendString(time.Format("[" + "2006-01-02 15:04:05.000" + "]"))
 	}
 	encoderConfig.EncodeLevel = func(l zapcore.Level, encoder zapcore.PrimitiveArrayEncoder) {
-		encoder.AppendString(global.App.Config.App.Env + "." + l.String())
+		encoder.AppendString("[" + global.App.Config.App.Env + "." + l.String() + "]")
 	}
 
 	// 设置编码器

@@ -1,8 +1,10 @@
 package routes
 
 import (
-	"gin-practice/app/controllers/api/v1"
-	request2 "gin-practice/app/requests"
+	"gin-practice/app/api/controllers/auth"
+	"gin-practice/app/api/controllers/v1"
+	"gin-practice/app/api/middleware"
+	"gin-practice/app/api/services"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"time"
@@ -17,21 +19,11 @@ func SetApiGroupRoutes(router *gin.RouterGroup) {
 		time.Sleep(5 * time.Second)
 		c.String(http.StatusOK, "success")
 	})
-}
 
-// SetApiV1GroupRoutes 定义 api 分组路由
-func SetApiV1GroupRoutes(router *gin.RouterGroup) {
-	router.POST("/user/register", func(c *gin.Context) {
-		var form request2.Register
-		if err := c.ShouldBindJSON(&form); err != nil {
-			c.JSON(http.StatusOK, gin.H{
-				"error": request2.GetErrorMsg(form, err),
-			})
-			return
-		}
-		c.JSON(http.StatusOK, gin.H{
-			"message": "success",
-		})
-	})
-	router.POST("/auth/register", v1.Register)
+	router.POST("/auth/login", auth.Login)
+	router.POST("/auth/register", auth.Register)
+	v1AuthRouter := router.Group("/v1").Use(middleware.JWTAuth(services.AppGuardName))
+	{
+		v1AuthRouter.POST("/user/info", v1.Info)
+	}
 }

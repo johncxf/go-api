@@ -1,7 +1,7 @@
 package bootstrap
 
 import (
-	"gin-practice/common"
+	"gin-practice/common/rules"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
 	"reflect"
@@ -11,7 +11,7 @@ import (
 func InitValidator() {
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
 		// 注册自定义验证器
-		_ = v.RegisterValidation("mobile", common.ValidateMobile)
+		_ = v.RegisterValidation("mobile", rules.ValidateMobile)
 
 		// 注册自定义 json tag 函数
 		v.RegisterTagNameFunc(func(fld reflect.StructField) string {

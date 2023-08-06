@@ -1,7 +1,7 @@
 package bootstrap
 
 import (
-	"gin-practice/app/models"
+	"gin-practice/app/api/models"
 	"gin-practice/global"
 	"go.uber.org/zap"
 	"gopkg.in/natefinch/lumberjack.v2"
@@ -52,7 +52,7 @@ func initMySqlGorm() *gorm.DB {
 		sqlDB, _ := db.DB()
 		sqlDB.SetMaxIdleConns(dbConfig.MaxIdleConns)
 		sqlDB.SetMaxOpenConns(dbConfig.MaxOpenConns)
-		initMySqlTables(db)
+		//initMySqlTables(db)
 		return db
 	}
 }
