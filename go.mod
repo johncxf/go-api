@@ -1,4 +1,4 @@
-module gin-practice
+module go-api
 
 go 1.19
 

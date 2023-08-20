@@ -1,8 +1,8 @@
 package bootstrap
 
 import (
-	"gin-practice/app/api/models"
-	"gin-practice/common/global"
+	"go-api/app/api/models"
+	"go-api/common/global"
 	"go.uber.org/zap"
 	"gopkg.in/natefinch/lumberjack.v2"
 	"gorm.io/driver/mysql"

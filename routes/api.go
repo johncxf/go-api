@@ -1,10 +1,10 @@
 package routes
 
 import (
-	"gin-practice/app/api/controllers/auth"
-	"gin-practice/app/api/controllers/v1"
-	"gin-practice/app/api/middleware"
-	"gin-practice/app/api/services"
+	"go-api/app/api/controllers/auth"
+	"go-api/app/api/controllers/v1"
+	"go-api/app/api/middleware"
+	"go-api/app/api/services"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"time"

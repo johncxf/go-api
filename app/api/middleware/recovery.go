@@ -1,8 +1,8 @@
 package middleware
 
 import (
-	"gin-practice/common/global"
-	"gin-practice/common/response"
+	"go-api/common/global"
+	"go-api/common/response"
 	"github.com/gin-gonic/gin"
 	"gopkg.in/natefinch/lumberjack.v2"
 )

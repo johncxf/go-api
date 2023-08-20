@@ -2,9 +2,9 @@ package bootstrap
 
 import (
 	"context"
-	"gin-practice/app/api/middleware"
-	"gin-practice/common/global"
-	"gin-practice/routes"
+	"go-api/app/api/middleware"
+	"go-api/common/global"
+	"go-api/routes"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"

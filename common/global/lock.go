@@ -2,7 +2,7 @@ package global
 
 import (
 	"context"
-	"gin-practice/common/utils"
+	"go-api/common/utils"
 	"github.com/go-redis/redis/v8"
 	"time"
 )

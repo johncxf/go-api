@@ -2,10 +2,10 @@ package services
 
 import (
 	"errors"
-	"gin-practice/app/api/models"
-	"gin-practice/app/api/requests"
-	"gin-practice/common/global"
-	"gin-practice/common/utils"
+	"go-api/app/api/models"
+	"go-api/app/api/requests"
+	"go-api/common/global"
+	"go-api/common/utils"
 	"strconv"
 )
 
@@ -39,6 +39,7 @@ func (userService *userService) Login(params requests.Login) (err error, user *m
 func (userService *userService) GetUserInfo(id string) (err error, user models.User) {
 	intId, err := strconv.Atoi(id)
 	err = global.App.DB.First(&user, intId).Error
+	//err = global.App.DB.Select([]string{"name", "mobile", "created_at", "updated_at"}).First(&user, intId).Error
 	if err != nil {
 		err = errors.New("数据不存在")
 	}

@@ -1,7 +1,7 @@
 package bootstrap
 
 import (
-	"gin-practice/common/rules"
+	"go-api/common/rules"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
 	"reflect"

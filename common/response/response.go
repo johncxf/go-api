@@ -1,7 +1,7 @@
 package response
 
 import (
-	"gin-practice/common/global"
+	"go-api/common/global"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"os"

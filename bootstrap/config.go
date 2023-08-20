@@ -2,7 +2,7 @@ package bootstrap
 
 import (
 	"fmt"
-	"gin-practice/common/global"
+	"go-api/common/global"
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 )

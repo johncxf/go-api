@@ -1,8 +1,8 @@
 package auth
 
 import (
-	"gin-practice/app/api/services"
-	"gin-practice/common/response"
+	"go-api/app/api/services"
+	"go-api/common/response"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 )

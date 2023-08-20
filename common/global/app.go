@@ -1,7 +1,7 @@
 package global
 
 import (
-	"gin-practice/common/config"
+	"go-api/common/config"
 	"github.com/go-redis/redis/v8"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"

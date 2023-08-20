@@ -1,9 +1,9 @@
 package auth
 
 import (
-	"gin-practice/app/api/requests"
-	"gin-practice/app/api/services"
-	"gin-practice/common/response"
+	"go-api/app/api/requests"
+	"go-api/app/api/services"
+	"go-api/common/response"
 	"github.com/gin-gonic/gin"
 )
 

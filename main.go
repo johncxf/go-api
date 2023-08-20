@@ -1,8 +1,8 @@
 package main
 
 import (
-	"gin-practice/bootstrap"
-	"gin-practice/common/global"
+	"go-api/bootstrap"
+	"go-api/common/global"
 )
 
 func main() {

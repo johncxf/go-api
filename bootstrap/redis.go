@@ -2,7 +2,7 @@ package bootstrap
 
 import (
 	"context"
-	"gin-practice/common/global"
+	"go-api/common/global"
 	"github.com/go-redis/redis/v8"
 	"go.uber.org/zap"
 )

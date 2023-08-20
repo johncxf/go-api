@@ -1,9 +1,9 @@
 package v1
 
 import (
-	"gin-practice/app/api/services"
-	"gin-practice/common/response"
 	"github.com/gin-gonic/gin"
+	"go-api/app/api/services"
+	"go-api/common/response"
 )
 
 func Info(c *gin.Context) {

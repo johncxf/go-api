@@ -3,8 +3,8 @@ package services
 import (
 	"context"
 	"errors"
-	"gin-practice/common/global"
-	"gin-practice/common/utils"
+	"go-api/common/global"
+	"go-api/common/utils"
 	"github.com/dgrijalva/jwt-go"
 	"strconv"
 	"time"
