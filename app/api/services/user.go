@@ -4,8 +4,8 @@ import (
 	"errors"
 	"gin-practice/app/api/models"
 	"gin-practice/app/api/requests"
+	"gin-practice/common/global"
 	"gin-practice/common/utils"
-	"gin-practice/global"
 	"strconv"
 )
 

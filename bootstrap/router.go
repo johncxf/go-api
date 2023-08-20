@@ -2,7 +2,8 @@ package bootstrap
 
 import (
 	"context"
-	"gin-practice/global"
+	"gin-practice/app/api/middleware"
+	"gin-practice/common/global"
 	"gin-practice/routes"
 	"github.com/gin-gonic/gin"
 	"log"
@@ -15,7 +16,14 @@ import (
 // setupRouter 设置路由
 func setupRouter() *gin.Engine {
 	global.App.Logger.Info("setup router")
-	router := gin.Default()
+	//router := gin.Default()
+	if global.App.Config.App.Env == "production" {
+		gin.SetMode(gin.ReleaseMode)
+	}
+	router := gin.New()
+	router.Use(gin.Logger(), middleware.CustomRecovery())
+	// 跨域处理
+	//router.Use(middleware.Cors())
 
 	// 注册 api 分组路由
 	apiGroup := router.Group("/api")

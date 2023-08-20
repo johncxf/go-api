@@ -1,6 +1,8 @@
 package utils
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"golang.org/x/crypto/bcrypt"
 	"log"
 )
@@ -20,4 +22,10 @@ func BcryptMakeCheck(pwd []byte, hashedPwd string) bool {
 		return false
 	}
 	return true
+}
+
+func MD5(str []byte, b ...byte) string {
+	h := md5.New()
+	h.Write(str)
+	return hex.EncodeToString(h.Sum(b))
 }

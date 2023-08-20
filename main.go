@@ -2,7 +2,7 @@ package main
 
 import (
 	"gin-practice/bootstrap"
-	"gin-practice/global"
+	"gin-practice/common/global"
 )
 
 func main() {
@@ -11,7 +11,7 @@ func main() {
 
 	// 初始化日志
 	global.App.Logger = bootstrap.InitLogger()
-	global.App.Logger.Info("--- Service start ---")
+	//global.App.Logger.Info("--- Service start ---")
 
 	// 初始化数据库
 	global.App.DB = bootstrap.InitDB()
@@ -25,6 +25,9 @@ func main() {
 
 	// 初始化验证器
 	bootstrap.InitValidator()
+
+	// 初始化 Redis
+	global.App.Redis = bootstrap.InitRedis()
 
 	// 启动服务器
 	bootstrap.RunServer()

@@ -1,9 +1,10 @@
 package response
 
 import (
-	"gin-practice/global"
+	"gin-practice/common/global"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"os"
 )
 
 // Response 响应结构体
@@ -46,6 +47,24 @@ func BusinessFail(c *gin.Context, msg string) {
 	Fail(c, global.Errors.BusinessError.ErrorCode, msg)
 }
 
+// TokenFail Token 错误
 func TokenFail(c *gin.Context) {
 	FailByError(c, global.Errors.AuthError)
+}
+
+// ServerError 服务错误信息
+func ServerError(c *gin.Context, err interface{}) {
+	msg := "Internal Server Error"
+	// 非生产环境显示具体错误信息
+	if global.App.Config.App.Env != "production" && os.Getenv(gin.EnvGinMode) != gin.ReleaseMode {
+		if _, ok := err.(error); ok {
+			msg = err.(error).Error()
+		}
+	}
+	c.JSON(http.StatusInternalServerError, Response{
+		http.StatusInternalServerError,
+		msg,
+		nil,
+	})
+	c.Abort()
 }

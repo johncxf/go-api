@@ -1,8 +1,8 @@
 package bootstrap
 
 import (
+	"gin-practice/common/global"
 	"gin-practice/common/utils"
-	"gin-practice/global"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"

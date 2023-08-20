@@ -2,7 +2,7 @@ package bootstrap
 
 import (
 	"gin-practice/app/api/models"
-	"gin-practice/global"
+	"gin-practice/common/global"
 	"go.uber.org/zap"
 	"gopkg.in/natefinch/lumberjack.v2"
 	"gorm.io/driver/mysql"

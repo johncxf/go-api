@@ -22,4 +22,4 @@ go.work
 
 storage
 
-env.yml
+config/env.yml

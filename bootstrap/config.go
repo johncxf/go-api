@@ -2,7 +2,7 @@ package bootstrap
 
 import (
 	"fmt"
-	"gin-practice/global"
+	"gin-practice/common/global"
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 )
@@ -18,7 +18,7 @@ func InitConfig() *viper.Viper {
 	// 初始化 viper
 	v := viper.New()
 	v.SetConfigName("env")
-	v.AddConfigPath("./")
+	v.AddConfigPath("./config/")
 	v.SetConfigType("yaml")
 	if err := v.ReadInConfig(); err != nil {
 		panic(fmt.Errorf("read config failed: %s \n", err))
