@@ -2,13 +2,14 @@ package bootstrap
 
 import (
 	"context"
-	"go-api/common/global"
 	"github.com/go-redis/redis/v8"
+	"go-api/common/global"
 	"go.uber.org/zap"
 )
 
 // InitRedis 初始化 Redis 连接
 func InitRedis() *redis.Client {
+	global.App.Logger.Info("init redis")
 	client := redis.NewClient(&redis.Options{
 		Addr:     global.App.Config.Redis.Host + ":" + global.App.Config.Redis.Port,
 		Password: global.App.Config.Redis.Password,

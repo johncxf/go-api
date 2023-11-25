@@ -1,14 +1,16 @@
 package bootstrap
 
 import (
-	"go-api/common/rules"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
+	"go-api/common/global"
+	"go-api/common/rules"
 	"reflect"
 	"strings"
 )
 
 func InitValidator() {
+	global.App.Logger.Info("init validator")
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
 		// 注册自定义验证器
 		_ = v.RegisterValidation("mobile", rules.ValidateMobile)

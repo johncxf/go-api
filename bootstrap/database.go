@@ -27,6 +27,7 @@ func InitDB() *gorm.DB {
 
 // 初始化 mysql gorm.DB
 func initMySqlGorm() *gorm.DB {
+	global.App.Logger.Info("init mysql")
 	dbConfig := global.App.Config.Database
 
 	if dbConfig.Database == "" {

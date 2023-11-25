@@ -2,10 +2,10 @@ package bootstrap
 
 import (
 	"context"
+	"github.com/gin-gonic/gin"
 	"go-api/app/api/middleware"
 	"go-api/common/global"
 	"go-api/routes"
-	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 	"os"
@@ -19,7 +19,10 @@ func setupRouter() *gin.Engine {
 	//router := gin.Default()
 	if global.App.Config.App.Env == "production" {
 		gin.SetMode(gin.ReleaseMode)
+	} else if global.App.Config.App.Env == "test" {
+		gin.SetMode(gin.TestMode)
 	}
+
 	router := gin.New()
 	router.Use(gin.Logger(), middleware.CustomRecovery())
 	// 跨域处理
@@ -34,6 +37,7 @@ func setupRouter() *gin.Engine {
 
 // RunServer 启动服务器
 func RunServer() {
+	global.App.Logger.Info("run server")
 	r := setupRouter()
 
 	srv := &http.Server{
@@ -60,5 +64,5 @@ func RunServer() {
 		log.Fatal("Server Shutdown:", err)
 	}
 	log.Println("Server exiting")
-	global.App.Logger.Info("--- Service start ---")
+	global.App.Logger.Info("--- Service stop ---")
 }

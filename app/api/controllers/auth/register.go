@@ -1,10 +1,10 @@
 package auth
 
 import (
+	"github.com/gin-gonic/gin"
 	"go-api/app/api/requests"
 	"go-api/app/api/services"
 	"go-api/common/response"
-	"github.com/gin-gonic/gin"
 )
 
 // Register 用户注册
