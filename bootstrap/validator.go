@@ -10,7 +10,7 @@ import (
 )
 
 func InitValidator() {
-	global.App.Logger.Info("init validator")
+	global.Logger.Info("init validator")
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
 		// 注册自定义验证器
 		_ = v.RegisterValidation("mobile", rules.ValidateMobile)

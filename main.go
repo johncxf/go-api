@@ -10,15 +10,14 @@ func main() {
 	bootstrap.InitConfig()
 
 	// 初始化日志
-	global.App.Logger = bootstrap.InitLogger()
-	//global.App.Logger.Info("--- Service start ---")
+	global.Logger = bootstrap.InitLogger()
 
 	// 初始化数据库
-	global.App.DB = bootstrap.InitDB()
+	global.DB = bootstrap.InitDB()
 	// 程序关闭前，释放数据库连接
 	defer func() {
-		if global.App.DB != nil {
-			db, _ := global.App.DB.DB()
+		if global.DB != nil {
+			db, _ := global.DB.DB()
 			db.Close()
 		}
 	}()
@@ -27,7 +26,7 @@ func main() {
 	bootstrap.InitValidator()
 
 	// 初始化 Redis
-	global.App.Redis = bootstrap.InitRedis()
+	global.Redis = bootstrap.InitRedis()
 
 	// 启动服务器
 	bootstrap.RunServer()

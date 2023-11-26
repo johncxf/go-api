@@ -2,9 +2,9 @@ package bootstrap
 
 import (
 	"fmt"
-	"go-api/common/global"
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
+	"go-api/common/global"
 )
 
 func InitConfig() *viper.Viper {
@@ -29,12 +29,12 @@ func InitConfig() *viper.Viper {
 	v.OnConfigChange(func(in fsnotify.Event) {
 		fmt.Println("config file changed:", in.Name)
 		// 重载配置
-		if err := v.Unmarshal(&global.App.Config); err != nil {
+		if err := v.Unmarshal(&global.Config); err != nil {
 			fmt.Println(err)
 		}
 	})
 	// 将配置赋值给全局变量
-	if err := v.Unmarshal(&global.App.Config); err != nil {
+	if err := v.Unmarshal(&global.Config); err != nil {
 		fmt.Println(err)
 	}
 

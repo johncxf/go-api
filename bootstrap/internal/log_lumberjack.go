@@ -14,14 +14,14 @@ type logLumberjack struct{}
 // GetWriteSyncer 获取 zapcore.WriteSyncer
 func (l *logLumberjack) GetWriteSyncer(level string) zapcore.WriteSyncer {
 	file := &lumberjack.Logger{
-		//Filename:   global.App.Config.Logger.RootDir + "/" + global.App.Config.Logger.Filename,
-		Filename:   global.App.Config.Logger.RootDir + "/" + level + ".log",
-		MaxSize:    global.App.Config.Logger.MaxSize,
-		MaxBackups: global.App.Config.Logger.MaxBackups,
-		MaxAge:     global.App.Config.Logger.MaxAge,
-		Compress:   global.App.Config.Logger.Compress,
+		//Filename:   global.Config.Logger.RootDir + "/" + global.Config.Logger.Filename,
+		Filename:   global.Config.Logger.RootDir + "/" + level + ".log",
+		MaxSize:    global.Config.Logger.MaxSize,
+		MaxBackups: global.Config.Logger.MaxBackups,
+		MaxAge:     global.Config.Logger.MaxAge,
+		Compress:   global.Config.Logger.Compress,
 	}
-	if global.App.Config.Logger.LogInConsole {
+	if global.Config.Logger.LogInConsole {
 		return zapcore.NewMultiWriteSyncer(zapcore.AddSync(os.Stdout), zapcore.AddSync(file))
 	}
 	return zapcore.AddSync(file)

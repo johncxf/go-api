@@ -1,11 +1,11 @@
 package middleware
 
 import (
+	"github.com/dgrijalva/jwt-go"
+	"github.com/gin-gonic/gin"
 	"go-api/app/api/services"
 	"go-api/common/global"
 	"go-api/common/response"
-	"github.com/dgrijalva/jwt-go"
-	"github.com/gin-gonic/gin"
 	"strconv"
 	"time"
 )
@@ -22,7 +22,7 @@ func JWTAuth(GuardName string) gin.HandlerFunc {
 
 		// Token 解析校验
 		token, err := jwt.ParseWithClaims(tokenStr, &services.CustomClaims{}, func(token *jwt.Token) (interface{}, error) {
-			return []byte(global.App.Config.Jwt.Secret), nil
+			return []byte(global.Config.Jwt.Secret), nil
 		})
 		if err != nil || services.JwtService.IsInBlacklist(tokenStr) {
 			response.TokenFail(c)
@@ -39,12 +39,12 @@ func JWTAuth(GuardName string) gin.HandlerFunc {
 		}
 
 		// token 续签
-		if claims.ExpiresAt - time.Now().Unix() < global.App.Config.Jwt.RefreshGracePeriod {
-			lock := global.Lock("refresh_token_lock", global.App.Config.Jwt.JwtBlacklistGracePeriod)
+		if claims.ExpiresAt-time.Now().Unix() < global.Config.Jwt.RefreshGracePeriod {
+			lock := global.Lock("refresh_token_lock", global.Config.Jwt.JwtBlacklistGracePeriod)
 			if lock.Get() {
 				err, user := services.JwtService.GetUserInfo(GuardName, claims.Id)
 				if err != nil {
-					global.App.Logger.Error(err.Error())
+					global.Logger.Error(err.Error())
 					lock.Release()
 				} else {
 					tokenData, _, _ := services.JwtService.CreateToken(GuardName, user)

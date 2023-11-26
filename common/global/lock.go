@@ -2,8 +2,8 @@ package global
 
 import (
 	"context"
-	"go-api/common/utils"
 	"github.com/go-redis/redis/v8"
+	"go-api/common/utils"
 	"time"
 )
 
@@ -16,9 +16,9 @@ type Interface interface {
 
 type lock struct {
 	context context.Context
-	name string // 锁名称
-	owner string // 锁标识
-	seconds int64 // 有效期
+	name    string // 锁名称
+	owner   string // 锁标识
+	seconds int64  // 有效期
 }
 
 // 释放锁 Lua 脚本，防止任何客户端都能解锁
@@ -42,7 +42,7 @@ func Lock(name string, seconds int64) Interface {
 
 // Get 获取锁
 func (l *lock) Get() bool {
-	return App.Redis.SetNX(l.context, l.name, l.owner, time.Duration(l.seconds)*time.Second).Val()
+	return Redis.SetNX(l.context, l.name, l.owner, time.Duration(l.seconds)*time.Second).Val()
 }
 
 // Block 阻塞一段时间，尝试获取锁
@@ -63,12 +63,11 @@ func (l *lock) Block(seconds int64) bool {
 // Release 释放锁
 func (l *lock) Release() bool {
 	luaScript := redis.NewScript(releaseLockLuaScript)
-	result := luaScript.Run(l.context, App.Redis, []string{l.name}, l.owner).Val().(int64)
+	result := luaScript.Run(l.context, Redis, []string{l.name}, l.owner).Val().(int64)
 	return result != 0
 }
 
 // ForceRelease 强制释放锁
 func (l *lock) ForceRelease() {
-	App.Redis.Del(l.context, l.name).Val()
+	Redis.Del(l.context, l.name).Val()
 }
-

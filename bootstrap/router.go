@@ -15,11 +15,11 @@ import (
 
 // setupRouter 设置路由
 func setupRouter() *gin.Engine {
-	global.App.Logger.Info("setup router")
+	global.Logger.Info("setup router")
 	//router := gin.Default()
-	if global.App.Config.App.Env == "production" {
+	if global.Config.App.Env == "production" {
 		gin.SetMode(gin.ReleaseMode)
-	} else if global.App.Config.App.Env == "test" {
+	} else if global.Config.App.Env == "test" {
 		gin.SetMode(gin.TestMode)
 	}
 
@@ -37,11 +37,11 @@ func setupRouter() *gin.Engine {
 
 // RunServer 启动服务器
 func RunServer() {
-	global.App.Logger.Info("run server")
+	global.Logger.Info("run server")
 	r := setupRouter()
 
 	srv := &http.Server{
-		Addr:    ":" + global.App.Config.App.Port,
+		Addr:    ":" + global.Config.App.Port,
 		Handler: r,
 	}
 
@@ -64,5 +64,5 @@ func RunServer() {
 		log.Fatal("Server Shutdown:", err)
 	}
 	log.Println("Server exiting")
-	global.App.Logger.Info("--- Service stop ---")
+	global.Logger.Info("--- Service stop ---")
 }

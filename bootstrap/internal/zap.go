@@ -14,7 +14,7 @@ type _zap struct{}
 
 // GetEncoder 获取 zapcore.Encoder
 func (z *_zap) GetEncoder() zapcore.Encoder {
-	if global.App.Config.Logger.Format == "json" {
+	if global.Config.Logger.Format == "json" {
 		return zapcore.NewJSONEncoder(z.GetEncoderConfig())
 	}
 	return zapcore.NewConsoleEncoder(z.GetEncoderConfig())
@@ -28,22 +28,22 @@ func (z *_zap) GetEncoderConfig() zapcore.EncoderConfig {
 		TimeKey:        "time",
 		NameKey:        "logger",
 		CallerKey:      "caller",
-		StacktraceKey:  global.App.Config.Logger.StacktraceKey,
+		StacktraceKey:  global.Config.Logger.StacktraceKey,
 		LineEnding:     zapcore.DefaultLineEnding,
-		EncodeLevel:    global.App.Config.Logger.ZapEncodeLevel(),
+		EncodeLevel:    global.Config.Logger.ZapEncodeLevel(),
 		EncodeTime:     z.CustomTimeEncoder,
 		EncodeDuration: zapcore.SecondsDurationEncoder,
 		EncodeCaller:   zapcore.ShortCallerEncoder,
 	}
 	//encoderConfig.EncodeLevel = func(l zapcore.Level, encoder zapcore.PrimitiveArrayEncoder) {
-	//	encoder.AppendString("[" + global.App.Config.App.Env + "." + l.String() + "]")
+	//	encoder.AppendString("[" + global.Config.App.Env + "." + l.String() + "]")
 	//}
 	return encoderConfig
 }
 
 // GetEncoderCore 获取Encoder的 zapcore.Core
 func (z *_zap) GetEncoderCore(l zapcore.Level, level zap.LevelEnablerFunc) zapcore.Core {
-	if global.App.Config.Logger.Type == "file-rotate-logs" {
+	if global.Config.Logger.Type == "file-rotate-logs" {
 		writer, err := LogFileRotateLogs.GetWriteSyncer(l.String()) // 使用file-rotatelogs进行日志分割
 		if err != nil {
 			fmt.Printf("Get Write Syncer Failed err:%v", err.Error())
@@ -58,13 +58,13 @@ func (z *_zap) GetEncoderCore(l zapcore.Level, level zap.LevelEnablerFunc) zapco
 
 // CustomTimeEncoder 自定义日志输出时间格式
 func (z *_zap) CustomTimeEncoder(t time.Time, encoder zapcore.PrimitiveArrayEncoder) {
-	encoder.AppendString(global.App.Config.Logger.Prefix + t.Format("2006-01-02 15:04:05.000"))
+	encoder.AppendString(global.Config.Logger.Prefix + t.Format("2006-01-02 15:04:05.000"))
 }
 
 // GetZapCores 根据配置文件的Level获取 []zapcore.Core
 func (z *_zap) GetZapCores() []zapcore.Core {
 	cores := make([]zapcore.Core, 0, 7)
-	for level := global.App.Config.Logger.TransportLevel(); level <= zapcore.FatalLevel; level++ {
+	for level := global.Config.Logger.TransportLevel(); level <= zapcore.FatalLevel; level++ {
 		cores = append(cores, z.GetEncoderCore(level, z.GetLevelPriority(level)))
 	}
 	return cores

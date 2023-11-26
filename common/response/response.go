@@ -1,8 +1,8 @@
 package response
 
 import (
-	"go-api/common/global"
 	"github.com/gin-gonic/gin"
+	"go-api/common/global"
 	"net/http"
 	"os"
 )
@@ -56,7 +56,7 @@ func TokenFail(c *gin.Context) {
 func ServerError(c *gin.Context, err interface{}) {
 	msg := "Internal Server Error"
 	// 非生产环境显示具体错误信息
-	if global.App.Config.App.Env != "production" && os.Getenv(gin.EnvGinMode) != gin.ReleaseMode {
+	if global.Config.App.Env != "production" && os.Getenv(gin.EnvGinMode) != gin.ReleaseMode {
 		if _, ok := err.(error); ok {
 			msg = err.(error).Error()
 		}

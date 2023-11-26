@@ -1,9 +1,9 @@
 package middleware
 
 import (
+	"github.com/gin-gonic/gin"
 	"go-api/common/global"
 	"go-api/common/response"
-	"github.com/gin-gonic/gin"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
@@ -11,11 +11,11 @@ import (
 func CustomRecovery() gin.HandlerFunc {
 	return gin.RecoveryWithWriter(
 		&lumberjack.Logger{
-			Filename:   global.App.Config.Logger.RootDir + "/" + global.App.Config.Logger.Filename,
-			MaxSize:    global.App.Config.Logger.MaxSize,
-			MaxBackups: global.App.Config.Logger.MaxBackups,
-			MaxAge:     global.App.Config.Logger.MaxAge,
-			Compress:   global.App.Config.Logger.Compress,
+			Filename:   global.Config.Logger.RootDir + "/" + global.Config.Logger.Filename,
+			MaxSize:    global.Config.Logger.MaxSize,
+			MaxBackups: global.Config.Logger.MaxBackups,
+			MaxAge:     global.Config.Logger.MaxAge,
+			Compress:   global.Config.Logger.Compress,
 		},
 		response.ServerError)
 }
