@@ -1,11 +1,11 @@
 package routes
 
 import (
+	"github.com/gin-gonic/gin"
 	"go-api/app/api/controllers/auth"
 	"go-api/app/api/controllers/v1"
 	"go-api/app/api/middleware"
 	"go-api/app/api/services"
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"time"
 )

@@ -14,8 +14,7 @@ func JWTAuth(GuardName string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tokenStr := c.Request.Header.Get("Authorization")
 		if tokenStr == "" {
-			response.TokenFail(c)
-			c.Abort()
+			response.TokenError(c)
 			return
 		}
 		tokenStr = tokenStr[len(services.TokenType)+1:]
@@ -25,16 +24,14 @@ func JWTAuth(GuardName string) gin.HandlerFunc {
 			return []byte(global.Config.Jwt.Secret), nil
 		})
 		if err != nil || services.JwtService.IsInBlacklist(tokenStr) {
-			response.TokenFail(c)
-			c.Abort()
+			response.TokenError(c)
 			return
 		}
 
 		claims := token.Claims.(*services.CustomClaims)
 		// Token 发布者校验
 		if claims.Issuer != GuardName {
-			response.TokenFail(c)
-			c.Abort()
+			response.TokenError(c)
 			return
 		}
 

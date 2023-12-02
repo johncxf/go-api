@@ -19,6 +19,7 @@ func main() {
 		if global.DB != nil {
 			db, _ := global.DB.DB()
 			db.Close()
+			global.Logger.Info("close database connect")
 		}
 	}()
 

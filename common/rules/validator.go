@@ -14,3 +14,15 @@ func ValidateMobile(fl validator.FieldLevel) bool {
 	}
 	return true
 }
+
+// ValidateEmail 校验邮箱
+func ValidateEmail(fl validator.FieldLevel) bool {
+	email := fl.Field().String()
+	ok, _ := regexp.MatchString(
+		`^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$`,
+		email)
+	if !ok {
+		return false
+	}
+	return true
+}

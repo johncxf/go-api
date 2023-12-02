@@ -9,7 +9,7 @@ import (
 func Info(c *gin.Context) {
 	err, user := services.UserService.GetUserInfo(c.Keys["id"].(string))
 	if err != nil {
-		response.BusinessFail(c, err.Error())
+		response.BusinessError(c, err.Error())
 		return
 	}
 	response.Success(c, user)

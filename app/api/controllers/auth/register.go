@@ -11,13 +11,13 @@ import (
 func Register(c *gin.Context) {
 	var form requests.Register
 	if err := c.ShouldBindJSON(&form); err != nil {
-		response.ValidateFail(c, requests.GetErrorMsg(form, err))
+		response.ValidateError(c, requests.GetErrorMsg(form, err))
 		return
 	}
 
-	if err, user := services.UserService.Register(form); err != nil {
-		response.BusinessFail(c, err.Error())
+	if err, _ := services.UserService.Register(form); err != nil {
+		response.BusinessError(c, err.Error())
 	} else {
-		response.Success(c, user)
+		response.Success(c, nil)
 	}
 }

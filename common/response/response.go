@@ -16,40 +16,40 @@ type Response struct {
 
 // Success 响应成功 ErrorCode 为 0 表示成功
 func Success(c *gin.Context, data interface{}) {
-	c.JSON(http.StatusOK, Response{
+	c.AbortWithStatusJSON(http.StatusOK, Response{
 		0,
 		"success",
 		data,
 	})
 }
 
-// Fail 响应失败 ErrorCode 不为 0 表示失败
-func Fail(c *gin.Context, code int, msg string) {
-	c.JSON(http.StatusOK, Response{
+// Error 响应失败 ErrorCode 不为 0 表示失败
+func Error(c *gin.Context, code int, msg string) {
+	c.AbortWithStatusJSON(http.StatusOK, Response{
 		code,
 		msg,
 		nil,
 	})
 }
 
-// FailByError 失败响应 返回自定义错误的错误码、错误信息
-func FailByError(c *gin.Context, error global.CustomError) {
-	Fail(c, error.ErrorCode, error.ErrorMsg)
+// ErrorByCustomCode 失败响应 返回自定义错误的错误码、错误信息
+func ErrorByCustomCode(c *gin.Context, error global.CustomError) {
+	Error(c, error.ErrorCode, error.ErrorMsg)
 }
 
-// ValidateFail 请求参数验证失败
-func ValidateFail(c *gin.Context, msg string) {
-	Fail(c, global.Errors.ValidateError.ErrorCode, msg)
+// ValidateError 请求参数验证失败
+func ValidateError(c *gin.Context, msg string) {
+	Error(c, global.Errors.ValidateError.ErrorCode, msg)
 }
 
-// BusinessFail 业务逻辑失败
-func BusinessFail(c *gin.Context, msg string) {
-	Fail(c, global.Errors.BusinessError.ErrorCode, msg)
+// BusinessError 业务逻辑失败
+func BusinessError(c *gin.Context, msg string) {
+	Error(c, global.Errors.BusinessError.ErrorCode, msg)
 }
 
-// TokenFail Token 错误
-func TokenFail(c *gin.Context) {
-	FailByError(c, global.Errors.AuthError)
+// TokenError Token 错误
+func TokenError(c *gin.Context) {
+	ErrorByCustomCode(c, global.Errors.AuthError)
 }
 
 // ServerError 服务错误信息
