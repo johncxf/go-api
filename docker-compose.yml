@@ -1,0 +1,55 @@
+version: "3.7"
+services:
+  mysql:
+    # 镜像版本号
+    image: mysql:8.0.33
+    # 容器名
+    container_name: go-web-mysql
+    # 端口号映射
+    ports:
+      - "8306:3306"
+    # 失败后总是重启
+    restart: "always"
+    command: "--default-authentication-plugin=mysql_native_password --init-file /data/application/init.sql"
+    environment:
+      MYSQL_ROOT_PASSWORD: "root123456" # root 账号密码
+      MYSQL_DATABASE: "test"            # 数据库
+    # 将mysql相关数据挂载到本机目录
+    volumes:
+      - ~/docker-data/go-api/mysql/init.sql:/data/application/init.sql
+      - ~/docker-data/go-api/mysql/data:/var/lib/mysql           #数据文件挂载
+      - ~/docker-data/go-api/mysql/conf.d:/etc/mysql/conf.d      #配置文件挂载
+      - ~/docker-data/go-api/mysql/log:/var/log/mysql            #日志文件挂载
+  redis:
+    # 镜像版本号
+    image: redis:7.2.4
+    # 容器名
+    container_name: go-web-redis
+    # 端口号
+    ports:
+      - "6379:6379"
+    # 失败后总是重启
+    restart: "always"
+    # 以配置文件的方式启动 redis.conf
+    command: "redis-server /etc/redis/redis.conf --appendonly yes --requirepass root123456"
+    # 文件夹以及文件映射
+    volumes:
+      - ~/docker-data/go-api/redis:/data
+      - ~/docker-data/go-api/redis/redis.conf:/etc/redis/redis.conf
+  go-api:
+    # 容器名
+    container_name: go-web-api
+    build:
+      context: .
+      dockerfile: Dockerfile-compose  # 默认为 Dockerfile，这里重新定义了 Dockerfile 路径
+    # 失败后总是重启
+    restart: "always"
+    #    command: sh -c "./wait-for-it.sh mysql:3306 -- ./go-api ./config/env.yml"
+    command: [ "/wait-for-it.sh", "mysql:3306", "--", "/go-api", "config/env.yml" ]
+    # 依赖启动项
+    depends_on:
+      - mysql
+      - redis
+    # 端口映射
+    ports:
+      - "8888:8088"

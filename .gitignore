@@ -25,3 +25,5 @@ log
 logs
 
 config/env.yml
+
+bin

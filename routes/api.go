@@ -7,7 +7,6 @@ import (
 	"go-api/app/api/middleware"
 	"go-api/app/api/services"
 	"net/http"
-	"time"
 )
 
 // SetApiGroupRoutes 定义 api 分组路由
@@ -15,10 +14,10 @@ func SetApiGroupRoutes(router *gin.RouterGroup) {
 	router.GET("/hello", func(c *gin.Context) {
 		c.String(http.StatusOK, "hello, word")
 	})
-	router.GET("/test", func(c *gin.Context) {
-		time.Sleep(5 * time.Second)
-		c.String(http.StatusOK, "success")
-	})
+	//router.GET("/test", func(c *gin.Context) {
+	//	time.Sleep(5 * time.Second)
+	//	c.String(http.StatusOK, "success")
+	//})
 
 	router.POST("/auth/login", auth.Login)
 	router.POST("/auth/register", auth.Register)

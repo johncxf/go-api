@@ -21,13 +21,12 @@ type User struct {
 	UserStatus   int        `json:"user_status"`
 	MobileStatus int        `json:"mobile_status"`
 	UserType     int        `json:"user_type"`
-	//Successions    int        `json:"successions"`
-	//MaxSuccessions int        `json:"max_successions"`
-	//LoginFailure   int        `json:"login_failure"`
-	//LastLoginIp    string     `json:"last_login_ip"`
-	//LastLoginTime  time.Time  `json:"last_login_time"`
 	Timestamps
 	SoftDeletes
+}
+
+func (user User) GetId() uint {
+	return user.ID.ID
 }
 
 func (user User) GetUid() string {
