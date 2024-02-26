@@ -45,7 +45,7 @@ services:
     # 失败后总是重启
     restart: "always"
     #    command: sh -c "./wait-for-it.sh mysql:3306 -- ./go-api ./config/env.yml"
-    command: [ "/wait-for-it.sh", "mysql:3306", "--", "/go-api", "config/env.yml" ]
+    command: [ "/wait-for-it.sh", "mysql:3306", "--", "/go-api", "config/env-docker.yml" ]
     # 依赖启动项
     depends_on:
       - mysql

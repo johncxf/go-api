@@ -25,5 +25,6 @@ log
 logs
 
 config/env.yml
+config/env-docker.yml
 
 bin
