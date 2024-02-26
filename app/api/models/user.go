@@ -18,9 +18,9 @@ type User struct {
 	Sex          int        `json:"sex"`
 	Birthday     *time.Time `json:"birthday"`
 	Signature    string     `json:"signature"`
-	UserStatus   int        `json:"user_status"`
-	MobileStatus int        `json:"mobile_status"`
-	UserType     int        `json:"user_type"`
+	UserStatus   int        `json:"userStatus"`
+	MobileStatus int        `json:"mobileStatus"`
+	UserType     int        `json:"userType"`
 	Timestamps
 	SoftDeletes
 }

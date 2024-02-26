@@ -13,12 +13,12 @@ type ID struct {
 type Timestamps struct {
 	//CreatedAt time.Time `json:"created_at"`
 	//UpdatedAt time.Time `json:"updated_at"`
-	CreatedAt utils.LocalTime `json:"created_at"`
-	UpdatedAt utils.LocalTime `json:"updated_at"`
+	CreatedAt utils.LocalTime `json:"createdAt"`
+	UpdatedAt utils.LocalTime `json:"updatedAt"`
 }
 
 // SoftDeletes 软删除
 type SoftDeletes struct {
 	//DeletedAt gorm.DeletedAt `json:"deleted_at" gorm:"index"`
-	DeletedAt utils.LocalTime `json:"deleted_at" gorm:"index"`
+	DeletedAt utils.LocalTime `json:"deletedAt" gorm:"index"`
 }

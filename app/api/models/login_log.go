@@ -4,7 +4,7 @@ import "time"
 
 type LoginLog struct {
 	ID
-	UserId    uint      `json:"user_id"`
+	UserId    uint      `json:"userId"`
 	IP        string    `json:"ip"`
-	LoginTime time.Time `json:"login_time"`
+	LoginTime time.Time `json:"loginTime"`
 }
