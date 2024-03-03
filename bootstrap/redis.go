@@ -17,7 +17,7 @@ func InitRedis() *redis.Client {
 	})
 	_, err := client.Ping(context.Background()).Result()
 	if err != nil {
-		global.Logger.Error("Redis connect ping failed, err:", zap.Any("err", err))
+		global.Logger.Error("Redis connect ping failed, err:", zap.Error(err))
 		return nil
 	}
 	return client

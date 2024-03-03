@@ -1,4 +1,4 @@
-package internal
+package logger
 
 import (
 	"go-api/common/global"

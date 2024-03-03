@@ -3,6 +3,8 @@ package main
 import (
 	"go-api/bootstrap"
 	"go-api/common/global"
+	"go-api/common/logger"
+	"go.uber.org/zap"
 )
 
 func main() {
@@ -10,7 +12,7 @@ func main() {
 	bootstrap.InitConfig()
 
 	// 初始化日志
-	global.Logger = bootstrap.InitLogger()
+	global.Logger, _ = logger.Init()
 
 	// 初始化数据库
 	global.DB = bootstrap.InitDB()
@@ -18,7 +20,10 @@ func main() {
 	defer func() {
 		if global.DB != nil {
 			db, _ := global.DB.DB()
-			db.Close()
+			if err := db.Close(); err != nil {
+				global.Logger.Error("close database connect failed:", zap.Error(err))
+				return
+			}
 			global.Logger.Info("close database connect")
 		}
 	}()

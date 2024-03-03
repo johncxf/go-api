@@ -6,6 +6,7 @@ import (
 	"go-api/app/api/services"
 	"go-api/common/global"
 	"go-api/common/response"
+	"go.uber.org/zap"
 	"time"
 )
 
@@ -32,7 +33,7 @@ func Login(c *gin.Context) {
 		}
 		loginTime := time.Now()
 		if err, _ := services.LoginLogService.AddLoginLog(user.GetId(), loginIP, loginTime); err != nil {
-			global.Logger.Warn("add login log error: " + err.Error())
+			global.Logger.Warn("add login log error:", zap.Error(err))
 		}
 
 		response.Success(c, tokenData)

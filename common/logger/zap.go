@@ -1,4 +1,4 @@
-package internal
+package logger
 
 import (
 	"fmt"
@@ -12,33 +12,13 @@ var Zap = new(_zap)
 
 type _zap struct{}
 
-// GetEncoder 获取 zapcore.Encoder
-func (z *_zap) GetEncoder() zapcore.Encoder {
-	if global.Config.Logger.Format == "json" {
-		return zapcore.NewJSONEncoder(z.GetEncoderConfig())
+// GetZapCores 根据配置文件的Level获取 []zapcore.Core
+func (z *_zap) GetZapCores() []zapcore.Core {
+	cores := make([]zapcore.Core, 0, 7)
+	for level := global.Config.Logger.TransportLevel(); level <= zapcore.FatalLevel; level++ {
+		cores = append(cores, z.GetEncoderCore(level, z.GetLevelPriority(level)))
 	}
-	return zapcore.NewConsoleEncoder(z.GetEncoderConfig())
-}
-
-// GetEncoderConfig 获取zapcore.EncoderConfig
-func (z *_zap) GetEncoderConfig() zapcore.EncoderConfig {
-	encoderConfig := zapcore.EncoderConfig{
-		MessageKey:     "message",
-		LevelKey:       "level",
-		TimeKey:        "time",
-		NameKey:        "logger",
-		CallerKey:      "caller",
-		StacktraceKey:  global.Config.Logger.StacktraceKey,
-		LineEnding:     zapcore.DefaultLineEnding,
-		EncodeLevel:    global.Config.Logger.ZapEncodeLevel(),
-		EncodeTime:     z.CustomTimeEncoder,
-		EncodeDuration: zapcore.SecondsDurationEncoder,
-		EncodeCaller:   zapcore.ShortCallerEncoder,
-	}
-	//encoderConfig.EncodeLevel = func(l zapcore.Level, encoder zapcore.PrimitiveArrayEncoder) {
-	//	encoder.AppendString("[" + global.Config.App.Env + "." + l.String() + "]")
-	//}
-	return encoderConfig
+	return cores
 }
 
 // GetEncoderCore 获取Encoder的 zapcore.Core
@@ -54,20 +34,6 @@ func (z *_zap) GetEncoderCore(l zapcore.Level, level zap.LevelEnablerFunc) zapco
 		writer := LogLumberjack.GetWriteSyncer(l.String())
 		return zapcore.NewCore(z.GetEncoder(), writer, level)
 	}
-}
-
-// CustomTimeEncoder 自定义日志输出时间格式
-func (z *_zap) CustomTimeEncoder(t time.Time, encoder zapcore.PrimitiveArrayEncoder) {
-	encoder.AppendString(global.Config.Logger.Prefix + t.Format("2006-01-02 15:04:05.000"))
-}
-
-// GetZapCores 根据配置文件的Level获取 []zapcore.Core
-func (z *_zap) GetZapCores() []zapcore.Core {
-	cores := make([]zapcore.Core, 0, 7)
-	for level := global.Config.Logger.TransportLevel(); level <= zapcore.FatalLevel; level++ {
-		cores = append(cores, z.GetEncoderCore(level, z.GetLevelPriority(level)))
-	}
-	return cores
 }
 
 // GetLevelPriority 根据 zapcore.Level 获取 zap.LevelEnablerFunc
@@ -106,4 +72,38 @@ func (z *_zap) GetLevelPriority(level zapcore.Level) zap.LevelEnablerFunc {
 			return level == zap.DebugLevel
 		}
 	}
+}
+
+// GetEncoder 获取 zapcore.Encoder 编码器(如何写入日志)
+func (z *_zap) GetEncoder() zapcore.Encoder {
+	if global.Config.Logger.Format == "json" {
+		return zapcore.NewJSONEncoder(z.GetEncoderConfig())
+	}
+	return zapcore.NewConsoleEncoder(z.GetEncoderConfig())
+}
+
+// GetEncoderConfig 获取 zapcore.EncoderConfig
+func (z *_zap) GetEncoderConfig() zapcore.EncoderConfig {
+	encoderConfig := zapcore.EncoderConfig{
+		MessageKey:     "message",
+		LevelKey:       "level",
+		TimeKey:        "time",
+		NameKey:        "logger",
+		CallerKey:      "caller",
+		StacktraceKey:  global.Config.Logger.StacktraceKey,
+		LineEnding:     zapcore.DefaultLineEnding,
+		EncodeLevel:    global.Config.Logger.ZapEncodeLevel(),
+		EncodeTime:     z.CustomTimeEncoder,
+		EncodeDuration: zapcore.SecondsDurationEncoder,
+		EncodeCaller:   zapcore.ShortCallerEncoder,
+	}
+	//encoderConfig.EncodeLevel = func(l zapcore.Level, encoder zapcore.PrimitiveArrayEncoder) {
+	//	encoder.AppendString("[" + global.Config.App.Env + "." + l.String() + "]")
+	//}
+	return encoderConfig
+}
+
+// CustomTimeEncoder 自定义日志输出时间格式
+func (z *_zap) CustomTimeEncoder(t time.Time, encoder zapcore.PrimitiveArrayEncoder) {
+	encoder.AppendString(global.Config.Logger.Prefix + t.Format("2006-01-02 15:04:05.000"))
 }

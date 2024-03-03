@@ -8,13 +8,6 @@ import (
 )
 
 func InitConfig() *viper.Viper {
-	//// 设置配置文件路径
-	//config := "env.yml"
-	//// 生产环境可以通过设置环境变量来改变配置文件路径
-	//if configEnv := os.Getenv("VIPER_CONFIG"); configEnv != "" {
-	//	config = configEnv
-	//}
-
 	// 初始化 viper
 	v := viper.New()
 	v.SetConfigName("env")

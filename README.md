@@ -8,6 +8,13 @@ Golang api framework.
  - Mysql 或 PostgreSQL
  - Redis（可选）
 
+Golang 配置：
+
+```sh
+$ go env -w GOPROXY=https://goproxy.cn,direct
+$ go env -w GO111MODULE=on
+```
+
 ### Installation | 安装
 
 clone：
